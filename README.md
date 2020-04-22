@@ -1,4 +1,4 @@
-# Draw and Guess
+# Drawuess
 ## Participants 
  - Hubert Jakubek
  - Tomasz Piech
@@ -6,9 +6,9 @@
 ### Do you need more people: Maybe
 
 ## Short description of the idea
-Draw and guess is an app where you can challenge Neural Network based AI to a charade game. 
-You can either choose random item and try to draw it and watch AI try to guess what you're drawing
-or let AI draw randomly chosen item and guess what it is supposed to be.
+Drawuess is an app where you can challenge Neural Network to a charade game. 
+Get random word, try to draw a picture of it and let NN guess what you are drawing.
 
-The project will be either Django web app or desktop app (we have not decided yet),
-and we will try to use the largest database of handdrawn pictures - the [Google's Quick Draw](https://github.com/googlecreativelab/quickdraw-dataset).
+We expect to add more features but this is the core of the project.
+
+The project will be Django web app, and we will try to use the largest database of handdrawn pictures - the [Google's Quick Draw](https://github.com/googlecreativelab/quickdraw-dataset).
