@@ -25,13 +25,21 @@ The project will be Django web app, and we will try to use the largest database 
 ### Sprint 2 - finish 12.5.2020
 - Creating AI model with PyTorch
 - Testing the model
-- Interjecting the components into Django app.(AI model, Canvas data)
+- Inserting the components (AI model, Canvas data) into Django app.
 
-### Sprint 3 - finish 19.5.2020
+### Sprint 3 - finish 19.5.2020 (half of deadline)
 - Finishing first working project version
 - Adding simple interface
-- Basic application tests
+- Testing the basic application
 
+### Sprint 4 - finish 26.5.2020
+- Staring work on extended version
+- Frontend - final touch
+- Adding project description to the site
 
+### Sprint 5 - finish 2.6.2020
+- Testing the application
+- Additional functionalities
 
-
+### Sprint 6 - finish 9.6.2020
+- Black box testing
