@@ -12,3 +12,12 @@ Get random word, try to draw a picture of it and let NN guess what you are drawi
 We expect to add more features but this is the core of the project.
 
 The project will be Django web app, and we will try to use the largest database of handdrawn pictures - the [Google's Quick Draw](https://github.com/googlecreativelab/quickdraw-dataset).
+
+
+## Roadmap
+
+### Sprint 1 - finish 5.5.2020
+- CanvasJS - creating a tool to draw images.
+- Scaling the image into 28x28.
+- Creating basic backend - Django.
+- Gathering model data.
