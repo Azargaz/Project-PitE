@@ -67,7 +67,7 @@ const draw = (event) => {
 
 const saveImage = async () => {
     const dataURL = canvas.toDataURL();
-    const response = await fetch('http://localhost:5555', {
+    const response = await fetch('http://localhost:8888/', {
         method: 'POST',
         cors: 'same-origin',
         headers: {
