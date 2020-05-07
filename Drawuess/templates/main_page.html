@@ -1,8 +1,26 @@
-<html>
-    <head>
-        <title>Drawuess</title>
-    </head>
-    <body>
-        <h1>Opening soon!!</h1>
-    </body>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas test</title>
+    <script src="{% static 'index.js' %}"></script>
+
+    <style type="text/css">
+        body { background-color: rgb(101, 114, 122); }
+        canvas { 
+            border: 1px solid black;
+            background-color: white;
+        }
+    </style>
+</head>
+<body onload="init()">
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="saveImage()">Save</button>
+    <br/>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <a id="saveImage"></a>
+</body>
 </html>
