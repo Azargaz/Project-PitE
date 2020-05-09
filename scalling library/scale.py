@@ -24,5 +24,8 @@ def scale_picture_arr(my_ndarray):
 
     return rescaled
 
+def scale_to_base64(rescaled_data):
+    resc = pybase64.b64encode(rescaled_data)
+    return resc
 
 #scale_picture_arr('XDDDDDDDDDDDDD')
