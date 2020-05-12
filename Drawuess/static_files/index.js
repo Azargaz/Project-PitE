@@ -10,7 +10,7 @@ var curX = 0,
 var drawFlag = false
     drawDotFlag = false
     strokeColor = "black"
-    lineWidth = 2;
+    lineWidth = 20;
 
 const init = () => {
     canvas = document.getElementById('canvas');

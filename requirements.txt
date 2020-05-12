@@ -1,2 +1,5 @@
 python=3.8.2
 django=3.0.5
+numpy=1.18.4
+pybase64=1.0.1
+opencv=4.2.0
