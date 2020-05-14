@@ -1,26 +1,34 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+    {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas test</title>
-    <script src="{% static 'index.js' %}"></script>
+    {% endblock %}
+    {% block title %}Canvas test{% endblock %}
 
-    <style type="text/css">
-        body { background-color: rgb(101, 114, 122); }
-        canvas { 
-            border: 1px solid black;
-            background-color: white;
-        }
-    </style>
-</head>
-<body onload="init()">
-    <button onclick="clearCanvas()">Clear</button>
-    <button onclick="saveImage()">Save</button>
-    <br/>
+
+
+{% block nav %} 
+<li class="nav-item">
+    <a class="nav-link" onclick="saveImage()" href="#">Save</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" onclick="clearCanvas()" href="#">Clear</a>
+  </li>
+
+
+{% endblock %}
+
+
+{% block jtron %}
+<div onload="init()">
+    <p class="lead">This is a simple canvas for you to draw on.</p>
+    <hr class="my-4">
     <canvas id="canvas" width="500" height="500"></canvas>
 
     <a id="saveImage"></a>
-</body>
+</div>
+{% endblock %}
+{% block body %}
+<script src="{% static 'index.js' %}"></script>
+{% endblock %}
 </html>

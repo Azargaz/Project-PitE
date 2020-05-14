@@ -10,14 +10,13 @@ var curX = 0,
 var drawFlag = false
     drawDotFlag = false
     strokeColor = "black"
-    lineWidth = 2;
+    lineWidth = 20;
 
 const init = () => {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
     w = canvas.width;
     h = canvas.height;
-
     canvas.addEventListener("mousemove", draw, false);
     canvas.addEventListener("mousedown", (event) => {
         drawFlag = true;
@@ -64,13 +63,30 @@ const draw = (event) => {
     ctx.stroke();
     ctx.closePath();
 }
-
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
 const saveImage = async () => {
     const dataURL = canvas.toDataURL();
-    const response = await fetch('http://localhost:5555', {
+    console.log(dataURL);
+    const response = await fetch('http://127.0.0.1:8000/picture/', {
         method: 'POST',
         cors: 'same-origin',
         headers: {
+            'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataURL)
