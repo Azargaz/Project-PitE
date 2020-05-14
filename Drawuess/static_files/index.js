@@ -17,7 +17,6 @@ const init = () => {
     ctx = canvas.getContext('2d');
     w = canvas.width;
     h = canvas.height;
-
     canvas.addEventListener("mousemove", draw, false);
     canvas.addEventListener("mousedown", (event) => {
         drawFlag = true;

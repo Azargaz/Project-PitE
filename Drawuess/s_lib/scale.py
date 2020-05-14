@@ -10,11 +10,11 @@ def scale_picture_arr(my_ndarray):
     for i in range(len(imgdata)):
         my_array.append(float(imgdata[i]))
     img = np.array(my_array)
-    rescaled = cv2.resize(img, dsize=(280, 280), interpolation=cv2.INTER_CUBIC)
+    rescaled = cv2.resize(img, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
     print('przeskalowano na wymiar {} x {}'.format(28, 28))
-    cv2.imshow("Resized image", rescaled)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("Resized image", rescaled)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     return rescaled
 
 def scale_to_base64(rescaled_data):
