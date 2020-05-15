@@ -10,7 +10,8 @@ var curX = 0,
 var drawFlag = false
     drawDotFlag = false
     strokeColor = "black"
-    lineWidth = 20;
+    lineWidth = 20
+    answer = '';
 
 const init = () => {
     canvas = document.getElementById('canvas');
@@ -79,10 +80,10 @@ function getCookie(name) {
     return cookieValue;
 }
 var csrftoken = getCookie('csrftoken');
-const saveImage = async () => {
+const saveImage = () => {
     const dataURL = canvas.toDataURL();
-    console.log(dataURL);
-    const response = await fetch('http://127.0.0.1:8000/picture/', {
+
+    fetch('http://127.0.0.1:8000/picture/', {
         method: 'POST',
         cors: 'same-origin',
         headers: {
@@ -90,6 +91,18 @@ const saveImage = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataURL)
-    });
-    console.log(response);
+    })
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+            answer = json.result;
+            updateAnswer();
+        })
+}
+
+const updateAnswer = () => {
+    answerElement = document.getElementById('answer')
+    if(answer !== '') {
+        answerElement.innerHTML = "Image you're drawing is: " + answer;
+    }
 }
