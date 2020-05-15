@@ -23,7 +23,7 @@ The project will be Django web app, and we will try to use the largest database 
 - Gathering AI model data.
 
 ### Sprint 2 - finish 12.5.2020
-- Creating AI model with PyTorch
+- Setting up AI model with Keras
 - Testing the model
 - Inserting the components (AI model, Canvas data) into Django app.
 
