@@ -22,3 +22,6 @@ def picture(request):
         raise Http404("ERROR")
     else:
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
+
+def about(request):
+    return render(request,'about.html')

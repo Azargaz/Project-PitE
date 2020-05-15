@@ -57,7 +57,7 @@ const draw = (event) => {
 
     if(!drawFlag) return;
     ctx.beginPath();
-    //ctx.moveTo(prevX, prevY);
+
     var dl = 20 + Math.sqrt((curX-prevX)*(curX-prevX));
     var szer = 20 + Math.sqrt((curY-prevY)*(curY-prevY));
     ctx.fillRect(curX, curY,dl,szer);
