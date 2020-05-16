@@ -57,11 +57,14 @@ const draw = (event) => {
 
     if(!drawFlag) return;
     ctx.beginPath();
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(curX, curY);
+
+    var dl = 20 + Math.sqrt((curX-prevX)*(curX-prevX));
+    var szer = 20 + Math.sqrt((curY-prevY)*(curY-prevY));
+    ctx.fillRect(curX, curY,dl,szer);
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = lineWidth;
     ctx.stroke();
+
     ctx.closePath();
 }
 function getCookie(name) {
