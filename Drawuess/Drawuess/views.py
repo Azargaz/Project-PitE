@@ -3,11 +3,13 @@ from django.http import JsonResponse, Http404
 import json, os, sys
 from .s_lib import scale
 from .cnn import model
-
+from random import choice
 import json
 
 def main_page(request):
-    return render(request,'main_page.html')
+    c = choice(model.CATEGORIES)
+    context = {'to_draw':c}
+    return render(request,'main_page.html',context)
 
 def picture(request):
     try:

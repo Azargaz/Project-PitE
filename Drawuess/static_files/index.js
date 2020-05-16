@@ -99,13 +99,28 @@ const saveImage = () => {
         .then(json => {
             console.log(json);
             answer = json.result;
-            updateAnswer();
+            if(answer.localeCompare(to_draw_item))
+            {
+                updateGoodAnswer();
+            }
+            else
+            {
+                updateBadAnswer();
+            }
+
         })
 }
 
-const updateAnswer = () => {
+const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
-        answerElement.innerHTML = "Image you're drawing is: " + answer;
+        answerElement.innerHTML = "YAY! You're drawing: " + answer;
+    }
+}
+
+const updateBadAnswer = () => {
+    answerElement = document.getElementById('answer')
+    if(answer !== '') {
+        answerElement.innerHTML = "Damn! I thought it was: " + answer;
     }
 }
