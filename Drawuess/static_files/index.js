@@ -1,5 +1,5 @@
 var canvas, ctx;
-
+var interval = 2000;
 var curX = 0,
     curY = 0,
     prevX = 0,
@@ -93,7 +93,8 @@ const saveImage = () => {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataURL)
+        body: JSON.stringify(dataURL),
+
     })
         .then(response => response.json())
         .then(json => {
@@ -107,10 +108,10 @@ const saveImage = () => {
             {
                 updateGoodAnswer();
             }
-
+            setTimeout(saveImage, interval);
         })
 }
-
+setTimeout(saveImage, interval);
 const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
