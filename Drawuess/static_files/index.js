@@ -101,11 +101,11 @@ const saveImage = () => {
             answer = json.result;
             if(answer.localeCompare(to_draw_item))
             {
-                updateGoodAnswer();
+                updateBadAnswer();
             }
             else
             {
-                updateBadAnswer();
+                updateGoodAnswer();
             }
 
         })
