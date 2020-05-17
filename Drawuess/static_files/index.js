@@ -9,8 +9,9 @@ var curX = 0,
 
 var drawFlag = false
     drawDotFlag = false
-    strokeColor = "black"
-    lineWidth = 20
+    strokeColor = 'black'
+    bgColor = 'white'
+    lineWidth = 5
     answer = '';
 
 const init = () => {
@@ -18,6 +19,8 @@ const init = () => {
     ctx = canvas.getContext('2d');
     w = canvas.width;
     h = canvas.height;
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, w, h);
     canvas.addEventListener("mousemove", draw, false);
     canvas.addEventListener("mousedown", (event) => {
         drawFlag = true;
@@ -29,7 +32,8 @@ const init = () => {
 }
 
 const clearCanvas = () => {
-    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, w, h);
 }
 
 const drawDot = (event) => {
@@ -41,9 +45,13 @@ const drawDot = (event) => {
     flag = true;
     drawDotFlag = true;
     if (drawDotFlag) {
-        ctx.beginPath();
+        ctx.beginPath();    
+        ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
+        ctx.strokeStyle = strokeColor;
         ctx.fillStyle = strokeColor;
-        ctx.fillRect(curX, curY, 2, 2);
+        ctx.lineWidth = lineWidth;
+        ctx.fill();
+        ctx.stroke();
         ctx.closePath();
         drawDotFlag = false;
     }
@@ -56,14 +64,16 @@ const draw = (event) => {
     curY = event.clientY - canvas.offsetTop;
 
     if(!drawFlag) return;
-    ctx.beginPath();
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(curX, curY);
+    ctx.beginPath();    
+    ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
     ctx.strokeStyle = strokeColor;
+    ctx.fillStyle = strokeColor;
     ctx.lineWidth = lineWidth;
+    ctx.fill();
     ctx.stroke();
     ctx.closePath();
 }
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -79,9 +89,14 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-var csrftoken = getCookie('csrftoken');
+
+
 const saveImage = () => {
     const dataURL = canvas.toDataURL();
+    const csrftoken = getCookie('csrftoken');
+
+    answer = 'loading...';
+    updateAnswer();
 
     fetch('http://127.0.0.1:8000/picture/', {
         method: 'POST',
@@ -94,8 +109,12 @@ const saveImage = () => {
     })
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             answer = json.result;
+            updateAnswer();
+        })
+        .catch(err => {
+            console.error(err);
+            answer = 'error!';
             updateAnswer();
         })
 }

@@ -10,12 +10,13 @@ body {
   }
     #canvas { 
         border: 1px solid black;
+        background-color: white;
         border-color: black;
         border: 10px solid;
     }
 
     footer{
-        position: absolute;
+        position: fixed;
         bottom: 0;
         width: 100%;
         font-size: small;
