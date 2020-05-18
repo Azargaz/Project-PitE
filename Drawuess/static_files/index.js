@@ -1,5 +1,5 @@
 var canvas, ctx;
-
+var interval = 2000;
 var curX = 0,
     curY = 0,
     prevX = 0,
@@ -9,15 +9,19 @@ var curX = 0,
 
 var drawFlag = false
     drawDotFlag = false
-    strokeColor = "black"
-    lineWidth = 20
-    answer = '';
+    strokeColor = 'black'
+    bgColor = 'white'
+    lineWidth = 5
+    answer = ''
+    answered = false;
 
 const init = () => {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
     w = canvas.width;
     h = canvas.height;
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, w, h);
     canvas.addEventListener("mousemove", draw, false);
     canvas.addEventListener("mousedown", (event) => {
         drawFlag = true;
@@ -29,7 +33,8 @@ const init = () => {
 }
 
 const clearCanvas = () => {
-    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, w, h);
 }
 
 const drawDot = (event) => {
@@ -41,9 +46,13 @@ const drawDot = (event) => {
     flag = true;
     drawDotFlag = true;
     if (drawDotFlag) {
-        ctx.beginPath();
+        ctx.beginPath();    
+        ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
+        ctx.strokeStyle = strokeColor;
         ctx.fillStyle = strokeColor;
-        ctx.fillRect(curX, curY, 2, 2);
+        ctx.lineWidth = lineWidth;
+        ctx.fill();
+        ctx.stroke();
         ctx.closePath();
         drawDotFlag = false;
     }
@@ -56,17 +65,17 @@ const draw = (event) => {
     curY = event.clientY - canvas.offsetTop;
 
     if(!drawFlag) return;
-    ctx.beginPath();
-
-    var dl = 20 + Math.sqrt((curX-prevX)*(curX-prevX));
-    var szer = 20 + Math.sqrt((curY-prevY)*(curY-prevY));
-    ctx.fillRect(curX, curY,dl,szer);
+    ctx.beginPath();    
+    ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
     ctx.strokeStyle = strokeColor;
+    ctx.fillStyle = strokeColor;
     ctx.lineWidth = lineWidth;
+    ctx.fill();
     ctx.stroke();
 
     ctx.closePath();
 }
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -82,9 +91,10 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-var csrftoken = getCookie('csrftoken');
-const saveImage = () => {
+
+const guessImage = () => {
     const dataURL = canvas.toDataURL();
+    const csrftoken = getCookie('csrftoken');
 
     fetch('http://127.0.0.1:8000/picture/', {
         method: 'POST',
@@ -93,19 +103,43 @@ const saveImage = () => {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataURL)
+        body: JSON.stringify(dataURL),
+
     })
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             answer = json.result;
-            updateAnswer();
+            if(answer.localeCompare(to_draw_item))
+            {
+                updateBadAnswer();
+                setTimeout(guessImage, interval);
+            }
+            else
+            {
+                updateGoodAnswer();
+                answered = true;
+            }
+        })
+        .catch(err => {
+            console.error(err);
         })
 }
 
-const updateAnswer = () => {
+const startGuessing = () => {
+    answered = false;
+    setTimeout(guessImage, interval);
+}
+
+const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
-        answerElement.innerHTML = "Image you're drawing is: " + answer;
+        answerElement.innerHTML = "I got it! You're drawing: " + answer;
+    }
+}
+
+const updateBadAnswer = () => {
+    answerElement = document.getElementById('answer')
+    if(answer !== '') {
+        answerElement.innerHTML = "So close! I thought it was: " + answer;
     }
 }

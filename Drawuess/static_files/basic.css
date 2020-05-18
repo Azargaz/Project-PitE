@@ -9,6 +9,7 @@ body {
   }
     #canvas { 
         border: 1px solid black;
+        background-color: white;
         border-color: black;
         border: 10px solid;
     }
