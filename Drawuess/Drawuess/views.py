@@ -16,7 +16,7 @@ def picture(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         body = body.split(',')
-        pic = scale.decode_and_scale(body[1])
+        pic = scale.prepare_image(body[1])
         response = model.predict(pic)
         return JsonResponse({'result': str(response) }, status=200)
     except Exception as e:
