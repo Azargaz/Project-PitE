@@ -6,7 +6,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 0 0;
   }
     #canvas { 
         border: 1px solid black;
@@ -24,4 +23,11 @@ body {
         background-color: gray;
         color: antiquewhite;
         padding-top: 0px;
+    }
+
+    .jumpotron{
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
     }

@@ -21,7 +21,7 @@
 
 {% block jtron %}
 <div onload="init()">
-    <p class="lead">This is a simple canvas for you to draw on.</p>
+    <p class="lead">This is a simple canvas for you to draw on. Please, try to draw <b><u>{{ to_draw }}</u></b></p>
     <hr class="my-4">
     <canvas id="canvas" width="500" height="500"></canvas>
 
@@ -30,6 +30,10 @@
 </div>
 {% endblock %}
 {% block body %}
+<script type="text/javascript">
+  var to_draw_item = "{{ to_draw }}";
+</script>
 <script src="{% static 'index.js' %}"></script>
+
 {% endblock %}
 </html>

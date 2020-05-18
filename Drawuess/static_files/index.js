@@ -1,5 +1,5 @@
 var canvas, ctx;
-
+var interval = 2000;
 var curX = 0,
     curY = 0,
     prevX = 0,
@@ -71,6 +71,7 @@ const draw = (event) => {
     ctx.lineWidth = lineWidth;
     ctx.fill();
     ctx.stroke();
+
     ctx.closePath();
 }
 
@@ -105,12 +106,21 @@ const saveImage = () => {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataURL)
+        body: JSON.stringify(dataURL),
+
     })
         .then(response => response.json())
         .then(json => {
             answer = json.result;
-            updateAnswer();
+            if(answer.localeCompare(to_draw_item))
+            {
+                updateBadAnswer();
+            }
+            else
+            {
+                updateGoodAnswer();
+            }
+            setTimeout(saveImage, interval);
         })
         .catch(err => {
             console.error(err);
@@ -118,10 +128,17 @@ const saveImage = () => {
             updateAnswer();
         })
 }
-
-const updateAnswer = () => {
+setTimeout(saveImage, interval);
+const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
-        answerElement.innerHTML = "Image you're drawing is: " + answer;
+        answerElement.innerHTML = "YAY! You're drawing: " + answer;
+    }
+}
+
+const updateBadAnswer = () => {
+    answerElement = document.getElementById('answer')
+    if(answer !== '') {
+        answerElement.innerHTML = "Damn! I thought it was: " + answer;
     }
 }
