@@ -12,7 +12,8 @@ var drawFlag = false
     strokeColor = 'black'
     bgColor = 'white'
     lineWidth = 5
-    answer = '';
+    answer = ''
+    answered = false;
 
 const init = () => {
     canvas = document.getElementById('canvas');
@@ -91,13 +92,9 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
-const saveImage = () => {
+const guessImage = () => {
     const dataURL = canvas.toDataURL();
     const csrftoken = getCookie('csrftoken');
-
-    answer = 'loading...';
-    updateAnswer();
 
     fetch('http://127.0.0.1:8000/picture/', {
         method: 'POST',
@@ -115,30 +112,34 @@ const saveImage = () => {
             if(answer.localeCompare(to_draw_item))
             {
                 updateBadAnswer();
+                setTimeout(guessImage, interval);
             }
             else
             {
                 updateGoodAnswer();
+                answered = true;
             }
-            setTimeout(saveImage, interval);
         })
         .catch(err => {
             console.error(err);
-            answer = 'error!';
-            updateAnswer();
         })
 }
-setTimeout(saveImage, interval);
+
+const startGuessing = () => {
+    answered = false;
+    setTimeout(guessImage, interval);
+}
+
 const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
-        answerElement.innerHTML = "YAY! You're drawing: " + answer;
+        answerElement.innerHTML = "I got it! You're drawing: " + answer;
     }
 }
 
 const updateBadAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
-        answerElement.innerHTML = "Damn! I thought it was: " + answer;
+        answerElement.innerHTML = "So close! I thought it was: " + answer;
     }
 }
