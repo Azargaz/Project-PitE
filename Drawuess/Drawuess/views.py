@@ -27,3 +27,6 @@ def picture(request):
 
 def about(request):
     return render(request,'about.html')
+
+def extended(request):
+    return render(request,'extended.html')
