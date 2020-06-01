@@ -44,13 +44,12 @@ K.common.set_image_dim_ordering('th')
 MODEL_PATH = 'model.json'
 MODEL_WEIGHTS_PATH = 'model.h5'
 MODEL_LABELS = 'model_labels.json'
+SIMILAR_IMAGES = 'similars.json'
 
 CATEGORIES = ['axe', 'angel', 'alarm clock', 'ant', 'apple', 'bat', 'bucket', 'cannon']
 SAMPLES = 10000
 
 def load_model():
-    print(os.getcwd())
-
     json_file = open(MODEL_PATH, 'r')
     loaded_model_json = json_file.read()
     json_file.close()
@@ -122,30 +121,53 @@ def train():
     scores = model.evaluate(X_test_cnn, y_test_cnn, verbose=0)
     save_model(model, label_dict)
 
-def get_category_image_range_from_npy(category, a, b):    
+def get_image_range_from_npy(category, a, b):    
     images = np.load('./{}.npy'.format(category))
     images = images[a:b, :]
     images = images[:, :784].reshape((images.shape[0], 1, 28, 28))
     images = images / 255.
     return images
 
+def get_single_image_from_npy(category, index):
+    return get_image_range_from_npy(category, index, index+1)
+
 # from PIL import Image
 
-def find_similar_images():
-    SIMILAR_SAMPLES = 10000
+def find_similar_images(category_index):
+    model, labels = load_model()
+    category = CATEGORIES[category_index]
+    input_images = get_image_range_from_npy(category, 0, SAMPLES)
+    result = model.predict(input_images, batch_size=32, verbose=0)
+    similar_images = []
+    for img_index, res in enumerate(result):
+        similar_category = ''
+        for i, r in enumerate(res):
+            if r >= 0.9 and i != category_index and similar_category == '':
+                similar_category = '{}:{}:{}'.format(category, CATEGORIES[i], img_index)
+        if similar_category != '':
+            similar_images.append(similar_category)
+        # Image.fromarray(get_single_image_from_npy(category, SAMPLES + img_index)[0, 0, :, :] * 255).show()
+    return similar_images
+
+def sort_similar_images(similars):
+    sorted_images = dict()
+    for similar in similars:
+        for image in similar:
+            image = image.split(':')
+            if image[1] not in sorted_images:
+                sorted_images[image[1]] = []
+            sorted_images[image[1]].append('{}:{}'.format(image[0], image[2]))
+    return sorted_images
+
+def find_all_similar_images():
     if check_if_model_exists():
-        model, labels = load_model()
+        similars = []
         for category_index, category in enumerate(CATEGORIES):
-            input_image = get_category_image_range_from_npy(CATEGORIES[category_index], SAMPLES, SAMPLES + SIMILAR_SAMPLES)
-            result = model.predict(input_image, batch_size=32, verbose=0)
-            for img_index, res in enumerate(result):
-                similar_categories = []
-                for i, r in enumerate(res):
-                    if r >= 0.9 and i != category_index:
-                        similar_categories.append('{}={:.3f}'.format(CATEGORIES[i], r))
-                if len(similar_categories) > 0:
-                    print('{}: [ {} ] [ {} ]'.format(img_index, similar_categories, category))
-                    # Image.fromarray(get_category_image_range_from_npy(CATEGORIES[category_index], SAMPLES + img_index, SAMPLES + img_index+1)[0, 0, :, :] * 255).show()
+            print('Finding similar images in category {}...'.format(category))
+            similars.append(find_similar_images(category_index))
+        similars = sort_similar_images(similars)
+        with open(SIMILAR_IMAGES, "w") as json_file:
+            json.dump(similars, json_file)
     else:
         return 'Could not find model and/or weights files.'
 
@@ -161,5 +183,5 @@ def predict(input_image):
 if __name__ == '__main__':
     if input('Are you sure you want to re-initialize and re-train the model? (Y/n) ' ).lower() == 'y':
         train()
-    else:
-        find_similar_images()
+    elif input('Do you want to setup similar images .json? (Y/n) ' ).lower() == 'y':
+        find_all_similar_images()
