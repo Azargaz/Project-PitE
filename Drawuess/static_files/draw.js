@@ -1,5 +1,5 @@
 var canvas, ctx;
-var interval = 2000;
+
 var curX = 0,
     curY = 0,
     prevX = 0,
@@ -11,9 +11,8 @@ var drawFlag = false
     drawDotFlag = false
     strokeColor = 'black'
     bgColor = 'white'
-    lineWidth = 5
-    answer = ''
-    answered = false;
+    lineWidth = 5;
+
 
 const init = () => {
     canvas = document.getElementById('canvas');

@@ -25,6 +25,15 @@ def picture(request):
     else:
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
+def picture_extended(request):
+    try:
+        return JsonResponse({'picture': 1 }, status=200)
+    except Exception as e:
+        print(e)
+        raise Http404("ERROR")
+    else:
+        return JsonResponse({'error': 'Something went wrong.'}, status=500)
+
 def about(request):
     return render(request,'about.html')
 
