@@ -8,21 +8,27 @@
 
 
 {% block nav %} 
-<li class="nav-item">
-    <a class="nav-link" onclick="saveImage()" href="#">Save</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" onclick="clearCanvas()" href="#">Clear</a>
-  </li>
-
 
 {% endblock %}
-
-
 {% block jtron %}
-<h1>About</h1>
+
+<div>
+  <h1 class="display-4">About</h1>
+  <hr class="my-4">
+  <p class="lead">
+    Drawuess is an app where you can challenge Neural Network to a charade game. Get random word, try to draw a picture of it and let NN guess what you are drawing.<br>
+    Another option is to draw the pictures that AI is uncertain about, to confirm it's suspitions.
+    <br><br>
+    Aviable drawings
+    <ul>
+      {% for item in items %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>  
+  </p>
+
+</div>
 {% endblock %}
 {% block body %}
-<h3>Soon!!</h3>
 {% endblock %}
 </html>

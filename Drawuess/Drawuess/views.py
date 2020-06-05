@@ -35,7 +35,7 @@ def picture_extended(request):
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
 def about(request):
-    return render(request,'about.html')
+    return render(request,'about.html',{'items':['leg','head']})
 
 def extended(request):
     return render(request,'extended.html')
