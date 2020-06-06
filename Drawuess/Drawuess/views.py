@@ -6,6 +6,8 @@ from .cnn import model
 from random import choice
 import json
 
+from .models import Category, Similar
+
 def main_page(request):
     c = choice(model.CATEGORIES)
     context = {'to_draw':c}
@@ -24,6 +26,14 @@ def picture(request):
         raise Http404("ERROR")
     else:
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
+
+def categories(request):
+    categories = [category.name for category in Category.objects.all()]
+    return JsonResponse({'categories': categories }, status=200)
+    
+def similars(request, category_name):
+    similars = [str(similar) for similar in Similar.objects.filter(correct_cat_name=category_name)]
+    return JsonResponse({'similars': similars }, status=200)
 
 def about(request):
     return render(request,'about.html')

@@ -34,7 +34,7 @@ def insert_category(conn, category):
     :param category:
     :return: category id
     """
-    sql = ''' INSERT INTO category(name)
+    sql = ''' INSERT INTO Drawuess_category(name)
               VALUES(?) '''
     cur = conn.cursor()
     cur.execute(sql, category)
@@ -47,7 +47,7 @@ def insert_similar(conn, similar):
     :param similar:
     :return: similar id
     """
-    sql = ''' INSERT INTO similar(correct_cat_name,similar_cat_name,npy_id)
+    sql = ''' INSERT INTO Drawuess_similar(correct_cat_name,similar_cat_name,npy_id)
               VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, similar)
@@ -57,11 +57,11 @@ if __name__ == '__main__':
     conn = create_connection('./db.sqlite3')
 
     with conn:
-        # create_table(conn, 'CREATE TABLE IF NOT EXISTS category (id integer PRIMARY KEY, name text NOT NULL);')
-        # create_table(conn, 'CREATE TABLE IF NOT EXISTS similar (id integer PRIMARY KEY, correct_cat_name text NOT NULL, similar_cat_name text NOT NULL, npy_id integer NOT NULL);')
+        create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_category (id integer PRIMARY KEY, name text NOT NULL);')
+        create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_similar (id integer PRIMARY KEY, correct_cat_name text NOT NULL, similar_cat_name text NOT NULL, npy_id integer NOT NULL);')
 
-        # print(insert_category(conn, ['test']))
-        sql = 'SELECT * FROM category'
+        print(insert_category(conn, ['test']))
+        sql = 'SELECT * FROM Drawuess_category'
         cur = conn.cursor()
         cur.execute(sql)
         for row in cur.fetchall():
