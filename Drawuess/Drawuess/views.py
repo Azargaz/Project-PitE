@@ -8,6 +8,8 @@ import json
 
 from .models import Category, Similar
 
+from PIL import Image
+
 def main_page(request):
     c = choice(model.CATEGORIES)
     context = {'to_draw':c}
@@ -36,7 +38,9 @@ def random_similar(request, category_name):
     random_sim = choice(similars)
     try:
         similar_img = model.get_single_image_from_npy(random_sim.correct_cat_name, random_sim.npy_id)
-        return JsonResponse({'similar': similar_img }, status=200)
+        Image.fromarray(similar_img[0][0] * 255).show()
+        similar_img = similar_img.tolist()
+        return JsonResponse({'similar': json.dumps(similar_img[0][0]) }, status=200)
     except Exception as e:
         print(e)
         raise Http404("ERROR")

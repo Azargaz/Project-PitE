@@ -17,6 +17,8 @@ import tensorflow.compat.v1 as tf
 
 import random
 
+from .database import *
+
 # FIX TO A BUG IN KERAS + TENSORFLOW >2.0 !!! #############################
 # import keras.backend.tensorflow_backend as tfback
 # import tensorflow as tf
@@ -72,6 +74,7 @@ def save_model(model, labels):
         json.dump(labels, json_file)
 
 def check_if_model_exists():
+    print('No model found...')
     return os.path.isfile(MODEL_PATH) and os.path.isfile(MODEL_WEIGHTS_PATH)
 
 def setup_categories(categories, samples, verbose=False):
@@ -122,7 +125,7 @@ def train():
     save_model(model, label_dict)
 
 def get_image_range_from_npy(category, a, b):    
-    images = np.load('./{}.npy'.format(category))
+    images = np.load('./Drawuess/cnn/{}.npy'.format(category))
     images = images[a:b, :]
     images = images[:, :784].reshape((images.shape[0], 1, 28, 28))
     images = images / 255.
@@ -166,8 +169,12 @@ def find_all_similar_images():
             print('Finding similar images in category {}...'.format(category))
             similars.append(find_similar_images(category_index))
         similars = sort_similar_images(similars)
-        with open(SIMILAR_IMAGES, "w") as json_file:
-            json.dump(similars, json_file)
+        conn = create_connection('./db.sqlite3')
+        with conn:
+            for category in similars:
+                for similar in similars[category]:
+                    similar = similar.split(':')
+                    insert_similar(conn, [category, similar[0], similar[1]])
     else:
         return 'Could not find model and/or weights files.'
 
@@ -183,5 +190,5 @@ def predict(input_image):
 if __name__ == '__main__':
     if input('Are you sure you want to re-initialize and re-train the model? (Y/n) ' ).lower() == 'y':
         train()
-    elif input('Do you want to setup similar images .json? (Y/n) ' ).lower() == 'y':
+    elif input('Do you want to setup similar images? (Y/n) ' ).lower() == 'y':
         find_all_similar_images()
