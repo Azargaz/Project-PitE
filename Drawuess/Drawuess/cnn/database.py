@@ -54,7 +54,7 @@ def insert_similar(conn, similar):
     return cur.lastrowid
 
 if __name__ == '__main__':
-    conn = create_connection('./db.sqlite3')
+    conn = create_connection('../../db.sqlite3')
 
     with conn:
         create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_category (id integer PRIMARY KEY, name text NOT NULL);')
