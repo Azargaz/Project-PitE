@@ -11,7 +11,7 @@ var drawFlag = false
     drawDotFlag = false
     strokeColor = 'black'
     bgColor = 'white'
-    lineWidth = 5;
+    lineWidth = 10;
 
 
 const init = () => {
@@ -46,7 +46,7 @@ const drawDot = (event) => {
     drawDotFlag = true;
     if (drawDotFlag) {
         ctx.beginPath();    
-        ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
+        ctx.arc(curX - lineWidth / 8, curY - lineWidth / 8, lineWidth / 8, 0, 2 * Math.PI);
         ctx.strokeStyle = strokeColor;
         ctx.fillStyle = strokeColor;
         ctx.lineWidth = lineWidth;
@@ -64,13 +64,12 @@ const draw = (event) => {
     curY = event.clientY - canvas.offsetTop;
 
     if(!drawFlag) return;
-    ctx.beginPath();    
-    ctx.arc(curX - lineWidth, curY - lineWidth, lineWidth, 0, 2 * Math.PI);
+    ctx.beginPath();
+    ctx.moveTo(prevX, prevY);
+    ctx.lineTo(curX, curY);
+    ctx.lineCap = "round";
     ctx.strokeStyle = strokeColor;
-    ctx.fillStyle = strokeColor;
     ctx.lineWidth = lineWidth;
-    ctx.fill();
     ctx.stroke();
-
     ctx.closePath();
 }

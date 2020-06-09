@@ -60,9 +60,18 @@ if __name__ == '__main__':
         # create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_category (id integer PRIMARY KEY, name text NOT NULL);')
         # create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_similar (id integer PRIMARY KEY, correct_cat_name text NOT NULL, similar_cat_name text NOT NULL, npy_id integer NOT NULL);')
 
-        # print(insert_category(conn, ['test']))
+        # insert_category(conn, ['apple'])
+        # insert_category(conn, ['bucket'])
+        print('Similars')
         sql = 'SELECT * FROM Drawuess_similar'
         cur = conn.cursor()
         cur.execute(sql)
+        for i, row in enumerate(cur.fetchall()):
+            if i % 10 == 0:
+                print(row)
+        sql = 'SELECT * FROM Drawuess_category'
+        cur = conn.cursor()
+        cur.execute(sql)
+        print('Categories')
         for row in cur.fetchall():
             print(row)

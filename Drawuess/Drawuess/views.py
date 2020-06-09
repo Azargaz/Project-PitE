@@ -8,7 +8,7 @@ import json
 
 from .models import Category, Similar
 
-from PIL import Image
+# from PIL import Image
 
 def main_page(request):
     c = choice(model.CATEGORIES)
@@ -31,8 +31,19 @@ def picture(request):
 
 def picture_extended(request):
     try:
-        return JsonResponse({'picture': 1 }, status=200)
-      
+        category_name = choice([category.name for category in Category.objects.all()])
+        similars = [similar for similar in Similar.objects.filter(similar_cat_name=category_name)]
+        random_sim = choice(similars)
+        similar_img = model.get_single_image_from_npy(random_sim.correct_cat_name, random_sim.npy_id)
+        # Image.fromarray(similar_img[0][0] * 255).show()
+        similar_img = similar_img.tolist()
+        return JsonResponse({'picture': json.dumps(similar_img[0][0]), 'similar_to': random_sim.similar_cat_name }, status=200)
+    except Exception as e:
+        print(e)
+        raise Http404("ERROR")
+    else:
+        return JsonResponse({'error': 'Something went wrong.'}, status=500)
+
 def categories(request):
     categories = [category.name for category in Category.objects.all()]
     return JsonResponse({'categories': categories }, status=200)

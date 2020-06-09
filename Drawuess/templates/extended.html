@@ -27,7 +27,7 @@
     <table>
         <tr>
             <td><canvas id="canvas" width="500" height="500"></canvas></td>
-            <td><img src="/media/apple.jpg" alt="picture here" width="500" height="500">  </td>
+            <td><canvas id="picture_extended" width="500" height="500">  </td>
         </tr>
     </table>
 
@@ -40,6 +40,7 @@
 <script src="{% static 'randomImageGET.js' %}"></script>
 <script src="{% static 'imagePOST.js' %}"></script>
 <script type="text/javascript">
+  init();
   getImage();
 </script>
 {% endblock %}

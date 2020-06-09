@@ -18,6 +18,29 @@ function getCookie(name) {
     return cookieValue;
 }
 
+const showImage = (image) => {
+    let pixels = [];
+    for(row of image) for (e of row) pixels.push(e);
+
+    let width = 28;
+    let height = 28;
+
+    // Create canvas
+    let canvas = document.getElementById('picture_extended');
+    let context = canvas.getContext('2d');
+    let imgData = context.createImageData(width, height);
+
+    for(let i = 0; i < pixels.length * 4; i+=4) {
+        pixel = Number(pixels[i/4]) * 255;
+        imgData.data[i] = pixel;
+        imgData.data[i + 1] = pixel;
+        imgData.data[i + 2] = pixel;
+        imgData.data[i + 3] = 255;
+    }
+
+    context.putImageData(imgData, 0, 0);
+}
+
 const getImage = () => {
     const csrftoken = getCookie('csrftoken');
 
@@ -32,7 +55,7 @@ const getImage = () => {
         .then(response => response.json())
         .then(json => {
             picture = json.picture;
-            alert(picture);
+            showImage(JSON.parse(picture));
         })
         .catch(err => {
             console.error(err);
