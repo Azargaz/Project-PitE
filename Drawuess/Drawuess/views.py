@@ -49,3 +49,6 @@ def random_similar(request, category_name):
 
 def about(request):
     return render(request,'about.html')
+
+def extended(request):
+    return render(request,'extended.html')
