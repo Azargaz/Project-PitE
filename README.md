@@ -37,9 +37,10 @@ The project will be Django web app, and we will try to use the largest database 
 - Frontend - final touch
 - Adding project description to the site
 
-### Sprint 5 - finish 2.6.2020
+### Sprint 5 - finish 9.6.2020
 - Testing the application
 - Additional functionalities
 
-### Sprint 6 - finish 9.6.2020
+### Sprint 6 - finish 16.6.2020
 - Black box testing
+- Finishing touches
