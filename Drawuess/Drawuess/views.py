@@ -29,6 +29,10 @@ def picture(request):
     else:
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
+def picture_extended(request):
+    try:
+        return JsonResponse({'picture': 1 }, status=200)
+      
 def categories(request):
     categories = [category.name for category in Category.objects.all()]
     return JsonResponse({'categories': categories }, status=200)
@@ -48,7 +52,7 @@ def random_similar(request, category_name):
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
 def about(request):
-    return render(request,'about.html')
+    return render(request,'about.html',{'items':['leg','head']})
 
 def extended(request):
     return render(request,'extended.html')

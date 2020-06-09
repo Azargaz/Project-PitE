@@ -1,4 +1,4 @@
-var answer = ''
+var picture = ''
     answered = false
     interval = 2000;
 
@@ -18,33 +18,21 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const guessImage = () => {
-    const dataURL = canvas.toDataURL();
+const getImage = () => {
     const csrftoken = getCookie('csrftoken');
 
-    fetch('http://127.0.0.1:8000/picture/', {
-        method: 'POST',
+    fetch('http://127.0.0.1:8000/picture_extended/', {
+        method: 'GET',
         cors: 'same-origin',
         headers: {
             'X-CSRFToken': csrftoken,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataURL),
-
     })
         .then(response => response.json())
         .then(json => {
-            answer = json.result;
-            if(answer.localeCompare(to_draw_item))
-            {
-                updateBadAnswer();
-                setTimeout(guessImage, interval);
-            }
-            else
-            {
-                updateGoodAnswer();
-                answered = true;
-            }
+            picture = json.picture;
+            alert(picture);
         })
         .catch(err => {
             console.error(err);

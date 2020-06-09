@@ -20,7 +20,7 @@
 
 
 {% block jtron %}
-<div onload="init()">
+<div>
     <p class="lead">This is a simple canvas for you to draw on. Please, try to draw <b><u>{{ to_draw }}</u></b></p>
     <hr class="my-4">
     <canvas id="canvas" width="500" height="500"></canvas>
@@ -36,6 +36,8 @@
 <script src="{% static 'draw.js' %}"></script>
 <script src="{% static 'imagePOST.js' %}"></script>
 <script src="{% static 'index.js' %}"></script>
-
+<script>
+  init();
+</script>
 {% endblock %}
 </html>

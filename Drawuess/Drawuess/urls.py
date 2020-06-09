@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import main_page, picture, about, categories, random_similar, extended
+from .views import main_page, picture, about, extended, picture_extended, categories, random_similar
 
 
 urlpatterns = [
@@ -25,7 +25,8 @@ urlpatterns = [
     path('picture/', picture, name='picture'),
     path('about/', about, name='about'),
     path('',main_page, name='main_page'),
+    path('extended/', extended, name='extended'),
+    path('picture_extended/', picture_extended, name='picture_extended'),
     path('categories/', categories, name='categories'),
     path('random_similar/<str:category_name>/', random_similar, name='random_similar')
-    path('extended/', extended, name='extended')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
