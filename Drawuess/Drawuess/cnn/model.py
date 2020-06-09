@@ -15,6 +15,10 @@ import os.path
 import json
 import tensorflow.compat.v1 as tf
 
+import random
+
+from .database import *
+
 # FIX TO A BUG IN KERAS + TENSORFLOW >2.0 !!! #############################
 # import keras.backend.tensorflow_backend as tfback
 # import tensorflow as tf
@@ -42,12 +46,12 @@ K.common.set_image_dim_ordering('th')
 MODEL_PATH = 'model.json'
 MODEL_WEIGHTS_PATH = 'model.h5'
 MODEL_LABELS = 'model_labels.json'
+SIMILAR_IMAGES = 'similars.json'
 
 CATEGORIES = ['axe', 'angel', 'alarm clock', 'ant', 'apple', 'bat', 'bucket', 'cannon']
+SAMPLES = 10000
 
 def load_model():
-    print(os.getcwd())
-
     json_file = open(MODEL_PATH, 'r')
     loaded_model_json = json_file.read()
     json_file.close()
@@ -70,6 +74,7 @@ def save_model(model, labels):
         json.dump(labels, json_file)
 
 def check_if_model_exists():
+    print('No model found...')
     return os.path.isfile(MODEL_PATH) and os.path.isfile(MODEL_WEIGHTS_PATH)
 
 def setup_categories(categories, samples, verbose=False):
@@ -107,9 +112,7 @@ def cnn_model(num_classes):
     return model
 
 def train():
-    samples = int(input('How many samples do you want to use? [recommended 10000]'))
-
-    X_train, X_test, y_train, y_test, label_dict = setup_categories(CATEGORIES, samples, verbose=True)
+    X_train, X_test, y_train, y_test, label_dict = setup_categories(CATEGORIES, SAMPLES, verbose=True)
     y_train_cnn = np_utils.to_categorical(y_train)
     y_test_cnn = np_utils.to_categorical(y_test)
     num_classes = y_test_cnn.shape[1]
@@ -120,6 +123,60 @@ def train():
     model.fit(X_train_cnn, y_train_cnn, validation_data=(X_test_cnn, y_test_cnn), epochs=10, batch_size=200)
     scores = model.evaluate(X_test_cnn, y_test_cnn, verbose=0)
     save_model(model, label_dict)
+
+def get_image_range_from_npy(category, a, b):    
+    images = np.load('./Drawuess/cnn/{}.npy'.format(category))
+    images = images[a:b, :]
+    images = images[:, :784].reshape((images.shape[0], 1, 28, 28))
+    images = images / 255.
+    return images
+
+def get_single_image_from_npy(category, index):
+    return get_image_range_from_npy(category, index, index+1)
+
+# from PIL import Image
+
+def find_similar_images(category_index):
+    model, labels = load_model()
+    category = CATEGORIES[category_index]
+    input_images = get_image_range_from_npy(category, 0, SAMPLES)
+    result = model.predict(input_images, batch_size=32, verbose=0)
+    similar_images = []
+    for img_index, res in enumerate(result):
+        similar_category = ''
+        for i, r in enumerate(res):
+            if r >= 0.9 and i != category_index and similar_category == '':
+                similar_category = '{}:{}:{}'.format(category, CATEGORIES[i], img_index)
+        if similar_category != '':
+            similar_images.append(similar_category)
+        # Image.fromarray(get_single_image_from_npy(category, SAMPLES + img_index)[0, 0, :, :] * 255).show()
+    return similar_images
+
+def sort_similar_images(similars):
+    sorted_images = dict()
+    for similar in similars:
+        for image in similar:
+            image = image.split(':')
+            if image[1] not in sorted_images:
+                sorted_images[image[1]] = []
+            sorted_images[image[1]].append('{}:{}'.format(image[0], image[2]))
+    return sorted_images
+
+def find_all_similar_images():
+    if check_if_model_exists():
+        similars = []
+        for category_index, category in enumerate(CATEGORIES):
+            print('Finding similar images in category {}...'.format(category))
+            similars.append(find_similar_images(category_index))
+        similars = sort_similar_images(similars)
+        conn = create_connection('./db.sqlite3')
+        with conn:
+            for category in similars:
+                for similar in similars[category]:
+                    similar = similar.split(':')
+                    insert_similar(conn, [category, similar[0], similar[1]])
+    else:
+        return 'Could not find model and/or weights files.'
 
 def predict(input_image):
     if check_if_model_exists():
@@ -133,3 +190,5 @@ def predict(input_image):
 if __name__ == '__main__':
     if input('Are you sure you want to re-initialize and re-train the model? (Y/n) ' ).lower() == 'y':
         train()
+    elif input('Do you want to setup similar images? (Y/n) ' ).lower() == 'y':
+        find_all_similar_images()
