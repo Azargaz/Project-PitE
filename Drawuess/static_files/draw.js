@@ -13,6 +13,20 @@ var drawFlag = false
     bgColor = 'white'
     lineWidth = 10;
 
+function offset(elem) {
+        if(!elem) elem = this;
+    
+        var x = elem.offsetLeft;
+        var y = elem.offsetTop;
+    
+        while (elem = elem.offsetParent) {
+            x += elem.offsetLeft;
+            y += elem.offsetTop;
+        }
+    
+        return { left: x, top: y };
+    }
+
 
 const init = () => {
     canvas = document.getElementById('canvas');
@@ -39,8 +53,9 @@ const clearCanvas = () => {
 const drawDot = (event) => {
     prevX = curX;
     prevY = curY;
-    curX = event.clientX - canvas.offsetLeft;
-    curY = event.clientY - canvas.offsetTop;
+    off = offset(canvas);
+    curX = event.clientX - off.left;
+    curY = event.clientY - off.top;
 
     flag = true;
     drawDotFlag = true;
@@ -60,8 +75,9 @@ const drawDot = (event) => {
 const draw = (event) => {
     prevX = curX;
     prevY = curY;
-    curX = event.clientX - canvas.offsetLeft;
-    curY = event.clientY - canvas.offsetTop;
+    off = offset(canvas);
+    curX = event.clientX - off.left;
+    curY = event.clientY - off.top;
 
     if(!drawFlag) return;
     ctx.beginPath();
