@@ -55,6 +55,7 @@ const getImage = () => {
         .then(response => response.json())
         .then(json => {
             picture = json.picture;
+            console.log(`similar to: ${json.similar_to}\noriginal category: ${json.category}`);
             showImage(JSON.parse(picture));
         })
         .catch(err => {

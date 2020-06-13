@@ -53,25 +53,34 @@ def insert_similar(conn, similar):
     cur.execute(sql, similar)
     return cur.lastrowid
 
-if __name__ == '__main__':
-    conn = create_connection('./db.sqlite3')
+def clear_category(conn):
+    """
+    Delete everything from categories table
+    :param conn:
+    """
+    sql = ''' DELETE FROM Drawuess_category '''
+    cur = conn.cursor()
+    cur.execute(sql)
 
-    with conn:
-        # create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_category (id integer PRIMARY KEY, name text NOT NULL);')
-        # create_table(conn, 'CREATE TABLE IF NOT EXISTS Drawuess_similar (id integer PRIMARY KEY, correct_cat_name text NOT NULL, similar_cat_name text NOT NULL, npy_id integer NOT NULL);')
+def clear_similar(conn):
+    """
+    Delete everything from similars table
+    :param conn:
+    """
+    sql = ''' DELETE FROM Drawuess_similar '''
+    cur = conn.cursor()
+    cur.execute(sql)
 
-        # insert_category(conn, ['apple'])
-        # insert_category(conn, ['bucket'])
-        print('Similars')
-        sql = 'SELECT * FROM Drawuess_similar'
-        cur = conn.cursor()
-        cur.execute(sql)
-        for i, row in enumerate(cur.fetchall()):
-            if i % 10 == 0:
-                print(row)
-        sql = 'SELECT * FROM Drawuess_category'
-        cur = conn.cursor()
-        cur.execute(sql)
-        print('Categories')
-        for row in cur.fetchall():
-            print(row)
+def get_categories(conn):
+    """
+    Select all from categories table
+    :param conn:
+    :return: categories
+    """
+    sql = ''' SELECT * FROM Drawuess_category '''
+    cur = conn.cursor()
+    cur.execute(sql)
+    return cur.fetchall()
+
+def get_category_names(conn):
+    return [category[1] for category in get_categories(conn)]
