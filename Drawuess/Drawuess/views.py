@@ -11,7 +11,7 @@ from .models import Category, Similar
 # from PIL import Image
 
 def main_page(request):
-    c = choice(model.CATEGORIES)
+    c = choice([category.name for category in Category.objects.all()])
     context = {'to_draw':c}
     return render(request,'main_page.html',context)
 
@@ -37,7 +37,7 @@ def picture_extended(request):
         similar_img = model.get_single_image_from_npy(random_sim.correct_cat_name, random_sim.npy_id)
         # Image.fromarray(similar_img[0][0] * 255).show()
         similar_img = similar_img.tolist()
-        return JsonResponse({'picture': json.dumps(similar_img[0][0]), 'similar_to': random_sim.similar_cat_name }, status=200)
+        return JsonResponse({'picture': json.dumps(similar_img[0][0]), 'similar_to': random_sim.similar_cat_name, 'category': random_sim.correct_cat_name }, status=200)
     except Exception as e:
         print(e)
         raise Http404("ERROR")
@@ -63,7 +63,7 @@ def random_similar(request, category_name):
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
 def about(request):
-    return render(request,'about.html',{'items':['leg','head']})
+    return render(request,'about.html',{'items': [category.name for category in Category.objects.all()]})
 
 def extended(request):
     return render(request,'extended.html')

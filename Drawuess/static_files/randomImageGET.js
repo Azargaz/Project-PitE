@@ -26,12 +26,14 @@ const showImage = (image) => {
     let height = 28;
 
     // Create canvas
-    let canvas = document.getElementById('picture_extended');
+    let canvas = document.createElement("canvas")
+    canvas.width = width;
+    canvas.height = height;
     let context = canvas.getContext('2d');
     let imgData = context.createImageData(width, height);
 
     for(let i = 0; i < pixels.length * 4; i+=4) {
-        pixel = Number(pixels[i/4]) * 255;
+        pixel = (1.0 - Number(pixels[i/4])) * 255;
         imgData.data[i] = pixel;
         imgData.data[i + 1] = pixel;
         imgData.data[i + 2] = pixel;
@@ -39,6 +41,7 @@ const showImage = (image) => {
     }
 
     context.putImageData(imgData, 0, 0);
+    document.getElementById("img").src = canvas.toDataURL();
 }
 
 const getImage = () => {
@@ -55,6 +58,7 @@ const getImage = () => {
         .then(response => response.json())
         .then(json => {
             picture = json.picture;
+            console.log(`similar to: ${json.similar_to}\noriginal category: ${json.category}`);
             showImage(JSON.parse(picture));
         })
         .catch(err => {
