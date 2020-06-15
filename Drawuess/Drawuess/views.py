@@ -63,7 +63,7 @@ def random_similar(request, category_name):
         return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
 def about(request):
-    return render(request,'about.html',{'items':['leg','head']})
+    return render(request,'about.html',{'items': [category.name for category in Category.objects.all()]})
 
 def extended(request):
     return render(request,'extended.html')
