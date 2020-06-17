@@ -35,7 +35,7 @@ const guessImage = () => {
         .then(response => response.json())
         .then(json => {
             answer = json.result;
-            updateAnswer(answer);
+            updateAnswer();
         })
         .catch(err => {
             console.error(err);
