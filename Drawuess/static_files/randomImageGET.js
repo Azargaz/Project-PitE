@@ -1,6 +1,7 @@
 var picture = ''
     answered = false
-    interval = 2000;
+    interval = 2000
+    similar_to='';
 
 function getCookie(name) {
     var cookieValue = null;
@@ -18,7 +19,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const showImage = (image) => {
+const showImage = (image, name) => {
     let pixels = [];
     for(row of image) for (e of row) pixels.push(e);
 
@@ -41,7 +42,7 @@ const showImage = (image) => {
     }
 
     context.putImageData(imgData, 0, 0);
-    document.getElementById("img").src = canvas.toDataURL();
+    document.getElementById(name).src = canvas.toDataURL();
 }
 
 const getImage = () => {
@@ -57,9 +58,13 @@ const getImage = () => {
     })
         .then(response => response.json())
         .then(json => {
-            picture = json.picture;
+            picture = [json.picture1,json.picture2,json.picture3,json.picture4];
+            similar_to = json.similar_to;
             console.log(`similar to: ${json.similar_to}\noriginal category: ${json.category}`);
-            showImage(JSON.parse(picture));
+            showImage(JSON.parse(picture[0],),"img1");
+            showImage(JSON.parse(picture[1],),"img2");
+            showImage(JSON.parse(picture[2],),"img3");
+            showImage(JSON.parse(picture[3],),"img4");
         })
         .catch(err => {
             console.error(err);

@@ -1,5 +1,4 @@
 var answer = ''
-    answered = false
     interval = 2000;
 
 function getCookie(name) {
@@ -34,8 +33,9 @@ const guessImage = () => {
     })
         .then(response => response.json())
         .then(json => {
-            answer = json.result;
-            updateAnswer(answer);
+            console.log(`result: ${json.result}\n`);
+            answer = json;
+            updateAnswer();
         })
         .catch(err => {
             console.error(err);

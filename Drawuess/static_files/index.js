@@ -3,6 +3,19 @@ const startGuessing = () => {
     setTimeout(guessImage, interval);
 }
 
+const updateAnswer = (an) => {
+    if(answer.localeCompare(to_draw_item))
+    {
+        updateBadAnswer();
+        setTimeout(guessImage, interval);
+    }
+    else
+    {
+        updateGoodAnswer();
+        answered = true;
+    }
+}
+
 const updateGoodAnswer = () => {
     answerElement = document.getElementById('answer')
     if(answer !== '') {
