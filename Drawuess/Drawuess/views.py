@@ -43,11 +43,11 @@ def picture_extended(request):
         similar_img2 = similar_img2.tolist()
         similar_img3 = similar_img3.tolist()
         similar_img4 = similar_img4.tolist()
-        return JsonResponse({'result':{'picture1': json.dumps(similar_img1[0][0]),
+        return JsonResponse({'picture1': json.dumps(similar_img1[0][0]),
                             'picture2': json.dumps(similar_img2[0][0]),
                             'picture3': json.dumps(similar_img3[0][0]),
                             'picture4': json.dumps(similar_img4[0][0]),
-                            'similar_to': random_sim[0].similar_cat_name, 'category': random_sim[0].correct_cat_name }},status=200)
+                            'similar_to': random_sim[0].similar_cat_name, 'category': random_sim[0].correct_cat_name },status=200)
     except Exception as e:
         print(e)
         raise Http404("ERROR")
