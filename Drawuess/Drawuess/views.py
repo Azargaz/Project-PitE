@@ -36,7 +36,7 @@ def picture_extended(request):
         similar_img2 = model.get_single_image_from_npy(random_sim[1].correct_cat_name, random_sim[1].npy_id)
         similar_img3 = model.get_single_image_from_npy(random_sim[2].correct_cat_name, random_sim[2].npy_id)
         similar_img4 = model.get_single_image_from_npy(random_sim[3].correct_cat_name, random_sim[3].npy_id)
-
+        
         similar_img1 = similar_img1.tolist()
         similar_img2 = similar_img2.tolist()
         similar_img3 = similar_img3.tolist()
