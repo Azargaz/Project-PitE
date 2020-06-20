@@ -5,26 +5,26 @@
 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'basic.css' %}" >
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" > -->
 
     <title>{% block title %} {% endblock %}</title>
     {% block head %} {% endblock %}
 </head>
 <body>
-
+<div id = "app_title"> <span> DRAWUESS </span> </div>
 <article>
   {% csrf_token %}
 	<header>
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
-              <a class="btn btn-primary" href="{% url 'main_page' %}">Draw to guess</a>
+              <a class="btn" href="{% url 'main_page' %}">Draw to guess</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-primary" href="{% url 'extended' %}">Guess and draw</a>
+              <a class="btn" href="{% url 'extended' %}">Guess and draw</a>
             </li>
             {% block nav %} {% endblock %}
             <li class="nav-item">
-              <a class="btn btn-primary" href="{% url 'about' %}" tabindex="-1" aria-disabled="true">About</a>
+              <a class="btn" href="{% url 'about' %}" tabindex="-1" aria-disabled="true">About</a>
             </li>
           </ul>
 	</header>
@@ -38,7 +38,8 @@
 </article>
 
 <footer>
-     <p>Website by Sebastian Sitko, Tomasz Piech, Hubert Jakubek</p>
+     <div id = "authors"> <p>Website by Sebastian Sitko, Tomasz Piech, Hubert Jakubek</p> </div>
+     For github link click <a href="https://github.com/Azargaz/Project-PitE/tree/master" class = "gitlink"> here </a> 
 </footer>
 </body>
 </html>

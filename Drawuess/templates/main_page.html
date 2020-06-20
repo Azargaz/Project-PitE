@@ -21,7 +21,8 @@
 
 {% block jtron %}
 <div>
-    <p class="lead">This is a simple canvas for you to draw on. Please, try to draw <b><u>{{ to_draw }}</u></b></p>
+    <p class="lead">This is a simple canvas for you to draw on. Please, try to draw <b><u>{{ to_draw }}</u></b>. <br> When you want app to start guessing, please press "Start". If you want to redraw your picture, press "Clear" </p>
+    <div id = "com"> </div>
     <hr class="my-4">
     <canvas id="canvas" width="500" height="500"></canvas>
 
@@ -39,5 +40,6 @@
 <script>
   init();
 </script>
+<!-- Points: <div id = "points">  </div> -->
 {% endblock %}
 </html>
