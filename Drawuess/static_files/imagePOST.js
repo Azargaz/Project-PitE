@@ -40,4 +40,5 @@ const guessImage = () => {
         .catch(err => {
             console.error(err);
         })
+    document.getElementById('com').innerHTML ='<b> Guessing has been started! </b> '
 }
