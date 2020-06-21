@@ -50,10 +50,8 @@ def setup_categories(categories, samples, verbose=False):
         if verbose:
             print("Setting up '{}' category...".format(category))
         label_dict[index] = str(category)
-        category = np.load('./{}.npy'.format(category))
+        category = np.load('./Drawuess/cnn/{}.npy'.format(category))
         category = category[:samples, :]
-        if verbose:
-            print(category.shape)
         category = np.c_[category, index * np.ones(len(category))]
         categories[index] = category    
     X = np.concatenate(([cat[:samples, :-1] for cat in categories]), axis=0).astype('float32')

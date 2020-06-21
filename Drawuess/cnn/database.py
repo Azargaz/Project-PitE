@@ -25,7 +25,7 @@ def insert_category(conn, category):
     return cur.lastrowid
 
 def insert_similar(conn, similar):
-    sql = ''' INSERT INTO Drawuess_similar(correct_cat_name,similar_cat_name,npy_id)
+    sql = ''' INSERT INTO Drawuess_similar(correct_cat_name, similar_cat_name, npy_id)
               VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, similar)

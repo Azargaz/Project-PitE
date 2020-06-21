@@ -1,16 +1,20 @@
-### Training model
+### Downloading images, training model, setting up database
 
-Training needs to be run from inside project's root directory.
+This is the instruction on how to setup the project and how to get all necessary files (assuming all libraries from `requirements.txt` have been installed).
+Please go to project's root directory and run setup using `python -m Drawuess.cnn.setup` command.
+After running the `setup` you will see this prompt:
 
-To train model put `.npy` files here (inside `cnn` folder) and run `model.py` using `python -m Drawuess.cnn.setup`. 
-Prompt will ask you if you want to train, answer `y` if you want to proceed.
-All `.npy` files should be named the same as categories e.g. cat drawings should be named `cat.npy`.
+    What would you like to setup?
+        1. Download images.
+        2. Re-initialize and re-train the model.
+        3. Clear and setup the database.
+    (type 1/2/3 to choose option or any other key to do nothing)
 
-Training will produce `model.json`, `model.h5` and `model_labels.json`. These files need to be put inside the main Drawuess folder, 
-otherwise the model predictions run from inside Django's `views` will not work correctly.
+Description for each option:
+1. (this option is necessary before running the application if there are no `.npy` files inside `/Drawuess/cnn/` directory) Download images - downloads all images needed to run the application (the `.npy` files).
+2. (this option is not necessary unless there are no `model.*` files in root directory) Re-initialize and re-train the model - creates from scratch the model files and then trains model using downloaded images.
+3. (this option is not necessary unless there is no `db.sqlite3` file in root directory) Clear and setup the database - setups the database from scratch.
 
-### Setting up database
-
-In case there is a need to setup the database, please run `python -m Drawuess.cnn.setup` inside project's root directory. When prompted for training please answer `n`
-and then when prompted to setup similar images and database answer `y`. This will save category names inside database, 
-find all incorrectly labeled images and then save paths to them inside database.
+In short: by default there is no need to run setup options 2. and 3. as all model and database files are inside `git` repository, 
+but the images needed to run the application are not included inside repository, therefore it is necessary to download them using `setup` script (recommended)
+or manually from [Quickdraw's Dataset Google Cloud](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/numpy_bitmap) (not recommended).
