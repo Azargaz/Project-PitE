@@ -15,6 +15,6 @@ Description for each option:
 2. (this option is not necessary unless there are no `model.*` files in root directory) Re-initialize and re-train the model - creates from scratch the model files and then trains model using downloaded images.
 3. (this option is not necessary unless there is no `db.sqlite3` file in root directory) Clear and setup the database - setups the database from scratch.
 
-In short: by default there is no need to run setup options 2. and 3. as all model and database files are inside `git` repository, 
+<b>TL;DR:</b> by default there is no need to run setup options 2. and 3. as all model and database files are inside `git` repository, 
 but the images needed to run the application are not included inside repository, therefore it is necessary to download them using `setup` script (recommended)
 or manually from [Quickdraw's Dataset Google Cloud](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/numpy_bitmap) (not recommended).
