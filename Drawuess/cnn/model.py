@@ -155,9 +155,3 @@ def predict(input_image):
         return labels[int(result[0])]
     except Exception as e:
         print('Error while predicting: {}'.format(e))
-
-if __name__ == '__main__':
-    if input('Are you sure you want to re-initialize and re-train the model? (Y/n) ' ).lower() == 'y':
-        train()
-    elif input('Do you want to setup similar images? (Y/n) ' ).lower() == 'y':
-        find_all_similar_images()
