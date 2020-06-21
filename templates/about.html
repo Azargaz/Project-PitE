@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}About{% endblock %}
+
+{% block nav %} 
+
+{% endblock %}
+
+{% block jtron %}
+
+<div>
+  <h1 class="display-4">About</h1>
+  <hr class="my-4">
+  <p class="lead">
+    Drawuess is an app where you can challenge Neural Network to a charade game. Get random word, try to draw a picture of it and let NN guess what you are drawing.
+    Another option is to try to guess and draw picture based on displayed pictures.
+    <br><br>
+    Aviable drawings
+    <ul>
+      {% for item in items %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>  
+  </p>
+</div>
+{% endblock %}
+{% block body %}
+{% endblock %}
+</html>

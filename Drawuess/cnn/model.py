@@ -1,45 +1,18 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
 from tensorflow import keras
 from keras.models import Sequential, model_from_json
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.utils import np_utils
 from keras import backend as K
-
 from sklearn.model_selection import train_test_split
-
 import os.path
 import json
 import tensorflow.compat.v1 as tf
-
 import random
-
 from .database import create_connection, clear_similar, insert_similar, get_category_names
-
-# FIX TO A BUG IN KERAS + TENSORFLOW >2.0 !!! #############################
-# import keras.backend.tensorflow_backend as tfback
-# import tensorflow as tf
-
-# print("tf.__version__ is", tf.__version__)
-# print("tf.keras.__version__ is:", tf.keras.__version__)
-
-# def _get_available_gpus():
-#     """Get a list of available gpu devices (formatted as strings).
-
-#     # Returns
-#         A list of available GPU devices.
-#     """
-#     #global _LOCAL_DEVICES
-#     if tfback._LOCAL_DEVICES is None:
-#         devices = tf.config.list_logical_devices()
-#         tfback._LOCAL_DEVICES = [x.name for x in devices]
-#     return [x for x in tfback._LOCAL_DEVICES if 'device:gpu' in x.lower()]
-
-# tfback._get_available_gpus = _get_available_gpus
-###########################################################################
 
 K.common.set_image_dim_ordering('th')
 
@@ -100,7 +73,6 @@ def cnn_model(num_classes):
     model.add(Dense(50, activation='relu'))
     model.add(Dense(num_classes, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
     return model
 
 def train():
@@ -127,7 +99,7 @@ def get_image_range_from_npy(category, a, b):
     return images
 
 def get_single_image_from_npy(category, index):
-    return get_image_range_from_npy(category, index, index+1)
+    return get_image_range_from_npy(category, index, index+1)[0][0]
 
 def find_similar_images(category_index, categories):
     model, labels = load_model()

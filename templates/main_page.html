@@ -1,26 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
-    {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% endblock %}
-    {% block title %}Drawuess{% endblock %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
 
+{% block title %}Drawuess{% endblock %}
 
-
-{% block nav %} 
-<li class="nav-item">
-  <a class="nav-link" onclick="startGuessing()" href="#">Start</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" onclick="clearCanvas()" href="#">Clear</a>
-</li>
-
+{% block nav %}
 
 {% endblock %}
 
-
 {% block jtron %}
 <div>
+    <li class="nav-item">
+      <a class="nav-link" onclick="startGuessing()" href="#">Start</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="clearCanvas()" href="#">Clear</a>
+    </li>
     <p class="lead">This is a simple canvas for you to draw on. Please, try to draw <b><u>{{ to_draw }}</u></b></p>
     <hr class="my-4">
     <canvas id="canvas" width="500" height="500"></canvas>

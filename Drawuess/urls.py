@@ -17,16 +17,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import main_page, picture, about, extended, picture_extended, categories, random_similar
-
+from .views import main_page, about, extended, guess_image, get_random_similars, categories
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('picture/', picture, name='picture'),
+    path('guess_image/', guess_image, name='guess_image'),
     path('about/', about, name='about'),
-    path('',main_page, name='main_page'),
+    path('', main_page, name='main_page'),
     path('extended/', extended, name='extended'),
-    path('picture_extended/', picture_extended, name='picture_extended'),
-    path('categories/', categories, name='categories'),
-    path('random_similar/<str:category_name>/', random_similar, name='random_similar')
+    path('get_random_similars/<int:count>/', get_random_similars, name='picture_extended'),
+    path('categories/', categories, name='categories')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
