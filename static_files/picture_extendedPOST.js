@@ -16,7 +16,6 @@ const checkImage = () => {
 
 const answerButtonYes = () => {
 	answerElement = document.getElementById('answer');
-	console.log(`a: ${answer}\np: ${similar_to}`);
 	if (answer === similar_to) {
 		answerElement.innerHTML = 'That is correct answer!';
 	} else {
@@ -27,5 +26,5 @@ const answerButtonYes = () => {
 const answerButtonNo = () => {
 	answerElement = document.getElementById('answer');
 	answerElement.innerHTML =
-		'That\'s a pity, try to draw again <button onclick = clearCanvas() class="btn btn-secondary btn-sm"> Clear </button>';
+		'That\'s a pity, try to draw again   <button onclick = clearCanvas() class="btn btn-secondary btn-sm"> Clear </button>';
 };

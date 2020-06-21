@@ -62,9 +62,6 @@ const getImage = () => {
 		.then((json) => {
 			pictures = JSON.parse(json.pictures);
 			similar_to = json.similar_to;
-			console.log(
-				`similar to: ${json.similar_to}`
-			);
 			showImage(pictures[0], 'img1');
 			showImage(pictures[1], 'img2');
 			showImage(pictures[2], 'img3');
