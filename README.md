@@ -13,6 +13,8 @@ We expect to add more features but this is the core of the project.
 
 The project will be Django web app, and we will try to use the largest database of handdrawn pictures - the [Google's Quick Draw](https://github.com/googlecreativelab/quickdraw-dataset).
 
+[More on about how to run and setup the project here.](./docs/README.md)
+[To learn more about machine learning side of the project go here.](./docs/NN_Report.md)
 
 ## Roadmap
 
