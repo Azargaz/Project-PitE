@@ -22,7 +22,7 @@ if __name__ == "__main__":
         download_images()
     elif setup_type.lower() == '2':
         train()
-    elif setup_type.lower() == '2':
+    elif setup_type.lower() == '3':
         print('\n-Setting up the database...')
         conn = create_connection('./db.sqlite3')
         with conn:

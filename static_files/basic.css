@@ -1,6 +1,10 @@
+html {
+	background-image: linear-gradient(rgb(129, 179, 255), rgb(153, 194, 255));
+	height: 100%;
+}
+
 body {
 	font-family: 'Roboto', sans-serif;
-	background-image: linear-gradient(rgb(129, 179, 255), rgb(153, 194, 255));
 	color: black;
 	margin: 0px;
 	padding: 0px;

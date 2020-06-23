@@ -1,6 +1,6 @@
 ## Drawuess - setup and running
 
-#### Downloading images, training model, setting up database
+### Downloading images, training model, setting up database
 
 This is the instruction on how to setup the project and how to get all necessary files (assuming all libraries from `requirements.txt` have been installed).
 Please go to project's root directory and run setup using `python -m Drawuess.cnn.setup` command.
@@ -21,7 +21,7 @@ Description for each option:
 but the images needed to run the application are not included inside repository, therefore it is necessary to download them using `setup` script (recommended)
 or manually from [Quickdraw's Dataset Google Cloud](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/numpy_bitmap) (not recommended).
 
-#### Running
+### Running
 
 After installing libraries and setting up please go to the root directory of project and run `python manage.py runserver`.
 If everything was setup properly the project should start at `http://127.0.0.1:8000`.
