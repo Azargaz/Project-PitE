@@ -1,6 +1,6 @@
 # Drawuess
 ## Participants 
- - Hubert Jakubek
+ - Hubert Jakubek [team leader]
  - Tomasz Piech
  - Sebastian Sitko
 ### Do you need more people: Maybe
