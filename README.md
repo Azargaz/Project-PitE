@@ -7,14 +7,15 @@
 
 ## Short description of the idea
 Drawuess is an app where you can challenge Neural Network to a charade game. 
-Get random word, try to draw a picture of it and let NN guess what you are drawing.
+Get random word, try to draw a picture of it and let AI guess what you are drawing.
 
-We expect to add more features but this is the core of the project.
+The extended part of the project is a game mode, where user has to guess what is displayed on images shown and try to draw it,
+then user can ask AI what they have drawn and check wheter what they thought and what AI thinks is the same.
 
 The project will be Django web app, and we will try to use the largest database of handdrawn pictures - the [Google's Quick Draw](https://github.com/googlecreativelab/quickdraw-dataset).
 
 - [How to setup and run the project here.](./docs/README.md)
-- [To learn more about machine learning side of the project go here.](./docs/NN_Report.md)
+- [To learn more about machine learning side of the project go here.](./docs/ML_Report.md)
 
 ## Roadmap
 

@@ -1,32 +1,32 @@
-### Drawuess - Machine Learning report
+## Drawuess - Machine Learning report
 
 Drawuess authors: Hubert Jakubek, Sebastian Sitko, Tomasz Piech
 
-#### Project idea - drawing and guessing
+### Project idea - drawing and guessing
 
 Main goal of the project was to use [Google's The Quick, Draw!](https://quickdraw.withgoogle.com/) dataset described [here](https://github.com/googlecreativelab/quickdraw-dataset).
 The Quick, Draw! is website which allows to play a game of charade, but not versus human - instead versus AI. 
 Google open-sourced the dataset collected using this website and it is one of the largest collections of hand-drawn doodles.
 
-Our project is similar to the idea of 'The Quick, Draw!' but simplified and with added extension which allows to play a bit different mode of this game.
+Our project is similar to the idea of 'The Quick, Draw!' but simplified and with added extension which allows to play a bit different game mode described later.
 
 
 
-#### Finding the right model
+### The Neural Network model
 
-This was the most difficult task of machine learning side of the project. We wanted to use model which was already prepared for and trained on the Quickdraw dataset
+Finding right model to use was the most difficult task of machine learning side of the project. We wanted to use model which was already prepared for and trained on the Quickdraw dataset
 but unfortunately it was not so easy to find such a model. 
 
-Short description of what we tried doing before we finally had our current model ready:
-1. We tried looking for complete model ready-to-use with model data from training but we failed to find one which would work correctly.
+Below a short timeline of what our process of finding model looked like:
+1. We tried looking for complete model ready-to-use but we failed to find one that we understood and could make it work.
 2. We failed to find one because of problems like:
     - a lot of models needed difficult to setup libraries or even special environments (like Magenta) to use them,
     - often these libraries had a lot of dependencies which where not described properly,
-    - because of that they had a lot of compatibility problems with newer version of dependecy libraries, 
-    - they did not have any requirements specified so we could not use earlier, compatible versions of these dependency libraries.
-3. After failing to find the model we tried looking for tutorials and guides on how to build model from 'scratch' using libraries such as Keras and Tensorflow.
+    - because of that they had a lot of compatibility problems with newer versions of dependecy libraries, 
+    - models we found for some reason did not have any requirements specified, so we could not use older, compatible versions of these dependency libraries.
+3. After failing to find the model we tried looking for tutorials and guides on how to build model using libraries such as Keras and Tensorflow.
 4. We found ["Classification of drawings made in the game 'Quick, draw!'"](https://github.com/kradolfer/quickdraw-image-recognition/blob/master/quickdraw_image_recognition.ipynb) - project describing and comparing use of different algorithms and techniques of classifying images.
-5. From that project we chose the Convolutional Nerual Network approach and using Keras we built our model based on the project above with some minor changes (Droput changed from 0.2 to 0.5 and we remade whole training procedure to be more generic and to allow training on more than 2 categories of images).
+5. From that project we chose the Convolutional Nerual Network approach and using Keras we built our model based on the project above with some changes (Droput changed from 0.2 to 0.5 and we remade whole training procedure to be more generic and to allow training on more than 2 categories of images).
 6. We encoutered some challenges such as: 
     - problems with Tensorflow 2.0 and above - downgrading Tensorflow and some other libraries helped us solve this, 
     - understanding input of Keras models - our images are black and white, but Keras needs additional dimension to discribe color channels even if it's not really used for anything, 
@@ -35,9 +35,29 @@ Short description of what we tried doing before we finally had our current model
     we just needed to prepare some images and fit the model, and then save the model data in .json files for later use).
 7. Finally we had model ready and trained on 2 categories of images (later we retrained it on 8 categories).
 
-#### Extended version of project - the alrogithm
+To conclude, most of our problems with finding model came from incompatible libraries and lack of any type of `requirements.txt` files in projects or tutorials desciribing these models.
+Another reason for problems was that we did not have any prior knowledge of machine learning, so the whole process was a learning experience.
 
-The extended part of our project is a mode where user has to draw doodle based on multiple miscategorized images which all resemble one randomly chosen category.
+#### Parameters of model and training
+
+Model consists of 9 layers:
+- Convolutional layer with 30 feature maps of size 5×5.
+- Pooling layer taking the max over 2*2 patches.
+- Convolutional layer with 15 feature maps of size 3×3.
+- Pooling layer taking the max over 2*2 patches.
+- Dropout layer with a probability of 50%.
+- Flatten layer.
+- Fully connected layer with 128 neurons and rectifier activation.
+- Fully connected layer with 50 neurons and rectifier activation.
+- Output layer.
+
+Training was executed on 10,000 samples per category and 10 epochs. Half of all samples became the training set and the other half test set.
+
+
+
+### Extended part of project
+
+The extended part of our project is a game mode where user has to draw doodle based on multiple miscategorized images which all resemble one randomly chosen category.
 E.g. user sees 4 images of what looks like a 'bucket' and tries to draw it, but the 'bucket' images from dataset are from any other category than 'bucket'.
 
 Below is code for function which finds all miscategorized images of one category (miscategorized images are called 'similar' because they are similar to other category than they were supposed to be categorized).
@@ -81,7 +101,7 @@ to allow us to access miscategorized images.
 
 
 
-#### Sources
+### Sources
 
 Final project sources:
 - [Google The Quick, Draw!](https://quickdraw.withgoogle.com/)
