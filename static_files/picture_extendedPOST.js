@@ -2,7 +2,7 @@ const updateAnswer = () => {
 	answerElement = document.getElementById('answer');
 	if (answer !== '') {
 		answerElement.innerHTML =
-			'Did you ment to draw ' +
+			'Did you meant to draw ' +
 			answer +
 			'?' +
 			'<button onclick = answerButtonYes() class="btn btn-secondary btn-sm"> yes </button>' +
