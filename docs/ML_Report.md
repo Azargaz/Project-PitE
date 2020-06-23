@@ -40,7 +40,7 @@ Another reason for problems was that we did not have any prior knowledge of mach
 
 #### Parameters of model and training
 
-Model consists of 9 layers:
+Our model consists of 9 layers:
 - Convolutional layer with 30 feature maps of size 5×5.
 - Pooling layer taking the max over 2*2 patches.
 - Convolutional layer with 15 feature maps of size 3×3.
@@ -51,16 +51,18 @@ Model consists of 9 layers:
 - Fully connected layer with 50 neurons and rectifier activation.
 - Output layer.
 
-Training was executed on 10,000 samples per category and 10 epochs. Half of all samples became the training set and the other half test set.
+Training was executed on 10,000 samples per category with 10 epochs and batch size equal 200. 
+Half of all samples became the training set and other half the test set.
 
 
 
 ### Extended part of project
 
 The extended part of our project is a game mode where user has to draw doodle based on multiple miscategorized images which all resemble one randomly chosen category.
-E.g. user sees 4 images of what looks like a 'bucket' and tries to draw it, but the 'bucket' images from dataset are from any other category than 'bucket'.
+E.g. user sees 4 images of what looks like a 'bucket' and tries to draw it without knowing wheter it is 'bucket' or not, 
+and the important part is that these images inside dataset are from any other category than the 'bucket'.
 
-Below is code for function which finds all miscategorized images of one category (miscategorized images are called 'similar' because they are similar to other category than they were supposed to be categorized).
+Below is code for function which finds all miscategorized images of one category (from now on miscategorized images are called 'similar' because they are similar to other category than they were supposed to be categorized).
 ```python
 1. def find_similar_images(category_index, categories):
 2.     model, labels = load_model()
@@ -94,9 +96,9 @@ individual results are shaped like this: [0.99, 0.55, 0.01, ...] where each valu
     - if the `value` is bigger than chosen threshold (`MIN_SIMILAR_CATEGORY_ACCURACY`), which we chose to be `0.95`,
     - if index of this category is different than original category index, as we look only for miscategorized images,
     - and if we have already found similar category,
-- the thresholds (`MAX_SIMILAR_CATEGORY_ACCURACY` and `MIN_SIMILAR_CATEGORY_ACCURACY`) tell prediction accuracy to look for,
-the max one is about how unsimilar image is supposed to be to its' original category, and the min one is about how much image is similar to other category,
-- function returns list of strings which are formatted like `original_category:similar_category:image_index`, this is returned inside other function which then saves this list inside database
+- the thresholds (`MAX_SIMILAR_CATEGORY_ACCURACY` and `MIN_SIMILAR_CATEGORY_ACCURACY`) tell the algorithm what prediction accuracy to look for -
+the max one is about how unsimilar image is supposed to be to its' original category, and the min one is about how much image needs to be similar to other categories,
+- function returns list of strings which are formatted like `original_category:similar_category:image_index`, this is used inside other function which then saves this list inside database
 to allow us to access miscategorized images.
 
 
